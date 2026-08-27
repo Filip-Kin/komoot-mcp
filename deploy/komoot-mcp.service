@@ -1,0 +1,19 @@
+[Unit]
+Description=komoot-mcp: private MCP server to search komoot trails and bookmark them, for cloud/mobile Claude
+After=network.target media-nas.mount
+Requires=media-nas.mount
+
+[Service]
+Type=simple
+User=filip
+WorkingDirectory=/media/nas/filip/ncdata/filip/files/Projects/komoot-mcp
+EnvironmentFile=/media/nas/filip/ncdata/filip/files/Projects/komoot-mcp/.env
+Environment="HOME=/home/filip"
+Environment="KOMOOT_MCP_DATA_DIR=/var/lib/komoot-mcp"
+Environment="PATH=/home/filip/.local/bin:/home/filip/.bun/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/usr/local/bin/bun run src/index.ts
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
